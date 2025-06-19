@@ -18,7 +18,7 @@
 .header__username {
   width: 160px;
   height: 16px;
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-family: "CabinetGrotesk-Regular", Arial, sans-serif;
   font-size: 20px;
   line-height: 100%;
   margin: 0;
@@ -27,7 +27,7 @@
   margin: 0 20px 0 auto;
   width: 147px;
   height: 24px;
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-family: "CabinetGrotesk-Regular", Arial, sans-serif;
   font-size: 20px;
   line-height: 24px;
 }
@@ -35,7 +35,7 @@
   margin: 0;
   width: 160px;
   height: 10px;
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-family: "CabinetGrotesk-Regular", Arial, sans-serif;
   font-size: 20px;
   line-height: 24px;
   color: rgba(0, 0, 0, 1);
