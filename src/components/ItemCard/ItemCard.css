@@ -1,0 +1,16 @@
+.card {
+  width: 320px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.card__name {
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  position: absolute;
+  top: 15px;
+  margin: 0;
+}
+.card__image {
+  width: 100%;
+}
