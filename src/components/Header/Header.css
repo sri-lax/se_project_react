@@ -30,10 +30,11 @@
   font-family: "CabinetGrotesk-Regular", Arial, sans-serif;
   font-size: 20px;
   line-height: 24px;
+  border: none;
 }
 .header__date-and-location {
   margin: 0;
-  width: 160px;
+  width: 180px;
   height: 10px;
   font-family: "CabinetGrotesk-Regular", Arial, sans-serif;
   font-size: 20px;

@@ -6,3 +6,6 @@
   box-sizing: border-box;
   padding: 26px;
 }
+.footer__text {
+  font-family: "CabinetGrotesk-Regular", Arial, sans-serif;
+}

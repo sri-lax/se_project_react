@@ -1,0 +1,8 @@
+.modal__image {
+  width: 498px;
+  height: 498px;
+  margin-left: -29px;
+  margin-top: -29px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
