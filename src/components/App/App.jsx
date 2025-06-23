@@ -31,6 +31,22 @@ function App() {
   };
 
   useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]); // watch activeModal here
+
+  useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
         const filterData = filterWeatherData(data);
@@ -46,6 +62,7 @@ function App() {
         <Main weatherData={weatherData} handleCardClick={handleCardClick} />
       </div>
       <ModalWithForm
+        isOpen={activeModal === "add-garment"}
         buttonText="Add garment"
         title="New garment"
         activeModal={activeModal}
@@ -74,17 +91,32 @@ function App() {
           <legend className="modal__legend">Select the weather type</legend>
 
           <label id="hot" className="modal__label modal__label_type_radio">
-            <input type="radio" className="modal__radio-input" />
+            <input
+              type="radio"
+              className="modal__radio-input"
+              name="weatherType"
+              value="hot"
+            />
             Hot
           </label>
 
           <label id="warm" className="modal__label modal__label_type_radio">
-            <input type="radio" className="modal__radio-input" />
+            <input
+              type="radio"
+              className="modal__radio-input"
+              name="weatherType"
+              value="warm"
+            />
             Warm
           </label>
 
           <label id="cold" className="modal__label modal__label_type_radio">
-            <input type="radio" className="modal__radio-input" />
+            <input
+              type="radio"
+              className="modal__radio-input"
+              name="weatherType"
+              value="cold"
+            />
             Cold
           </label>
         </fieldset>

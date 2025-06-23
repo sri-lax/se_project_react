@@ -1,8 +1,8 @@
 import "./ModalWithForm.css";
 import closeButton from "../../assets/closeButton.svg";
-function ModalWithForm({ children, buttonText, title, activeModal, onclose }) {
+function ModalWithForm({ children, buttonText, title, isOpen, onclose }) {
   return (
-    <div className={`modal ${activeModal === "add-garment" && "modal_opened"}`}>
+    <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content_type_image">
         <h2 className="modal__title">{title}</h2>
         <button onClick={onclose} type="button" className="modal__close">
