@@ -1,7 +1,7 @@
 import "./ClothesSection.css";
 import { defaultClothingItems } from "../../utils/constants";
 import ItemCard from "../ItemCard/ItemCard";
-function ClothSection({ onCardClick, clothingItems }) {
+function ClothesSection({ onCardClick, clothingItems }) {
   return (
     <div className="cloth-section">
       <div className="cloth__section-header">
@@ -18,4 +18,4 @@ function ClothSection({ onCardClick, clothingItems }) {
     </div>
   );
 }
-export default ClothSection;
+export default ClothesSection;
