@@ -1,4 +1,4 @@
-import ClothSection from "../ClothSection/ClothSection";
+import ClothesSection from "../ClothesSection/ClotheSection";
 import SideBar from "../SideBar/SideBar";
 import "./Profile.css";
 function Profile({ onCardClick, clothingItems }) {
@@ -8,7 +8,10 @@ function Profile({ onCardClick, clothingItems }) {
         <SideBar />
       </section>
       <section className="profile__clothing-items">
-        <ClothSection onCardClick={onCardClick} clothingItems={clothingItems} />
+        <ClothesSection
+          onCardClick={onCardClick}
+          clothingItems={clothingItems}
+        />
       </section>
     </div>
   );
