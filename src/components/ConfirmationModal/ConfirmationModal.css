@@ -1,0 +1,18 @@
+.modal__actions {
+  display: grid;
+  justify-content: center;
+  background-color: none;
+}
+
+.modal__confirm {
+  border: none;
+  color: rgba(255, 77, 0, 1);
+}
+.modal__cancel {
+  border: none;
+  margin: 24px;
+}
+.modal__caption {
+  width: 367px;
+  height: 48px;
+}

@@ -6,3 +6,23 @@
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
+.modal__delete {
+  width: 114px;
+  background-color: rgba(255, 255, 255, 1);
+  border: none;
+  height: 24px;
+  margin-left: 328px;
+  margin-top: -78px;
+  color: rgba(255, 77, 0, 1);
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0%;
+}
+.modal_hidden {
+  display: none;
+}
+.modal__weather {
+  width: 115px;
+}
