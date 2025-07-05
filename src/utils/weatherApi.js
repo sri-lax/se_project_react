@@ -1,3 +1,4 @@
+import { weatherOptions, defaultWeatherOptions } from "./constants";
 export const getWeather = ({ latitude, longitude }, APIkey) => {
   return fetch(
     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
@@ -5,7 +6,7 @@ export const getWeather = ({ latitude, longitude }, APIkey) => {
     if (res.ok) {
       return res.json();
     } else {
-      return promise.reject(`Error:${res.status}`);
+      return Promise.reject(`Error: ${res.status}`);
     }
   });
 };
@@ -13,10 +14,14 @@ export const getWeather = ({ latitude, longitude }, APIkey) => {
 export const filterWeatherData = (data) => {
   const result = {};
   result.city = data.name;
-  result.temp = { F: data.main.temp };
+  result.temp = {
+    F: Math.round(data.main.temp), // Fahrenheit from OpenWeather
+    C: Math.round(((data.main.temp - 32) * 5) / 9), // Convert to Celsius
+  };
   result.type = getWeatherType(result.temp.F);
   result.condition = data.weather[0].main.toLowerCase();
   result.isDay = isDay(data.sys, Date.now());
+
   return result;
 };
 const isDay = ({ sunrise, sunset }, now) => {
@@ -31,4 +36,20 @@ const getWeatherType = (temperature) => {
   } else {
     return "cold";
   }
+};
+
+export const getWeatherImage = ({ condition, isDay }) => {
+  if (!condition || typeof isDay !== "boolean") {
+    return isDay ? defaultWeatherOptions.day : defaultWeatherOptions.night;
+  }
+
+  const normalizedCondition = condition.toLowerCase();
+
+  const match = weatherOptions.find(
+    (option) => option.condition === normalizedCondition && option.day === isDay
+  );
+
+  return (
+    match || (isDay ? defaultWeatherOptions.day : defaultWeatherOptions.night)
+  );
 };

@@ -3,16 +3,22 @@ import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 
 export default function ToggleSwitch() {
-  const { handleToggleSwitchChange, currentTemperatureUnit } = useContext(
+  const { currentTemperatureUnit, setCurrentTemperatureUnit } = useContext(
     CurrentTemperatureUnitContext
   );
+
+  const handleToggleSwitchChange = () => {
+    setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
+  };
 
   return (
     <label className="toggle-switch">
       <input
-        onChange={handleToggleSwitchChange}
         type="checkbox"
+        onChange={handleToggleSwitchChange}
+        checked={currentTemperatureUnit === "C"}
         className="toggle-switch__checkbox"
+        aria-label="Toggle temperature unit"
       />
       <span className="toggle-switch__circle"></span>
       <span
