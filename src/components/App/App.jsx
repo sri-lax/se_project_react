@@ -10,7 +10,7 @@ import Profile from "../Profile/Profile";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import Footer from "../Footer/Footer";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
-import { getItems } from "../../utils/api";
+import { getItems, addItem, deleteItem } from "../../utils/api";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
       prevItems.filter((item) => item._id !== selectedCard._id)
     );
     setIsConfirmModalOpen(false);
-    setActiveModal("");
+    closeActiveModal();
   };
 
   const handleCancelDelete = () => setIsConfirmModalOpen(false);
@@ -54,11 +54,15 @@ function App() {
   const closeActiveModal = () => setActiveModal("");
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    setClothingItems((prevItems) => [
-      { name, imageUrl, weather },
-      ...prevItems,
-    ]);
-    closeActiveModal();
+    addItem({ name, imageUrl, weather })
+      .then((newItem) => {
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
+        closeActiveModal();
+      })
+      .catch((error) => {
+        console.error("Failed to add item:", error);
+        // Optional: show feedback to user
+      });
   };
 
   // ⌨️ Close modal with Esc key

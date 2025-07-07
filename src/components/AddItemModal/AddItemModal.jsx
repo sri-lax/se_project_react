@@ -1,6 +1,6 @@
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export default function AddItemModal({
   onclose,
   isOpen,
@@ -26,11 +26,16 @@ export default function AddItemModal({
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddItemModalSubmit({ name, imageUrl, weather });
-    // empty the form fields after submission
-    setName("");
-    setImageUrl("");
-    setWeather("");
   };
+
+  // ✅ Reset fields only when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setName("");
+      setImageUrl("");
+      setWeather("");
+    }
+  }, [isOpen]);
 
   return (
     <ModalWithForm
