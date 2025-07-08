@@ -38,11 +38,13 @@ function App() {
   };
 
   const handleConfirmDelete = () => {
-    setClothingItems((prevItems) =>
-      prevItems.filter((item) => item._id !== selectedCard._id)
-    );
-    setIsConfirmModalOpen(false);
-    closeActiveModal();
+    deleteItem(selectedCard._id).then(() => {
+      setClothingItems((prevItems) =>
+        prevItems.filter((item) => item._id !== selectedCard._id)
+      );
+      setIsConfirmModalOpen(false);
+      closeActiveModal();
+    });
   };
 
   const handleCancelDelete = () => setIsConfirmModalOpen(false);
