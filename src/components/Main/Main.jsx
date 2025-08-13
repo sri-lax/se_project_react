@@ -5,7 +5,7 @@ import { getWeatherImage } from "../../utils/weatherApi";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 
-function Main({ weatherData, onCardClick, clothingItems }) {
+function Main({ weatherData, onCardClick, clothingItems, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const weatherOption = getWeatherImage(weatherData);
 
@@ -29,6 +29,7 @@ function Main({ weatherData, onCardClick, clothingItems }) {
                   key={item._id || `fallback-key-${index}`}
                   item={item}
                   onCardClick={onCardClick}
+                  onCardLike={onCardLike}
                 />
               );
             })}

@@ -1,11 +1,18 @@
 // ConfirmationModal.jsx
 import "./ConfirmationModal.css";
 
-function ConfirmationModal({ onConfirm, onCancel }) {
+function ConfirmationModal({ isOpen, onConfirm, onCancel }) {
+  if (!isOpen) return null;
+
   return (
-    <div className="modal modal_opened">
+    <div
+      className={`modal ${isOpen ? "modal_opened" : ""}`}
+      role="dialog"
+      aria-labelledby="confirmation-title"
+      aria-modal="true"
+    >
       <div className="modal__content modal__content_delete">
-        <p className="modal__caption">
+        <p className="modal__caption" id="confirmation-title">
           Are you sure you want to delete this item? This action is
           irreversible.
         </p>

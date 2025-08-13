@@ -28,3 +28,13 @@
   margin: 0;
   gap: 21px;
 }
+
+.clothes-section__items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.clothes-section__item {
+  list-style: none;
+}

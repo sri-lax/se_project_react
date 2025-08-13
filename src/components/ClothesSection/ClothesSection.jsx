@@ -1,7 +1,14 @@
+import { useContext } from "react";
 import "./ClothesSection.css";
-import { defaultClothingItems } from "../../utils/constants";
 import ItemCard from "../ItemCard/ItemCard";
+import CurrentUserContext from "../../Contexts/CurrentUserContext";
+
 function ClothesSection({ onCardClick, clothingItems, onAddClick }) {
+  const currentUser = useContext(CurrentUserContext);
+  const userItems = clothingItems.filter(
+    (item) => item.owner === currentUser?._id
+  );
+
   return (
     <div className="cloth-section">
       <div className="cloth__section-header">
@@ -10,14 +17,22 @@ function ClothesSection({ onCardClick, clothingItems, onAddClick }) {
           + Add new
         </button>
       </div>
-      <ul className="clothes-section__items">
-        {clothingItems.map((item) => {
-          return (
-            <ItemCard key={item._id} item={item} onCardClick={onCardClick} />
-          );
-        })}
-      </ul>
+      {userItems.length === 0 ? (
+        <p className="clothes-section__empty">No items yet. Add something!</p>
+      ) : (
+        <ul className="clothes-section__items">
+          {userItems.map((item, index) => (
+            <li
+              key={item._id || `${item.name}-${index}`}
+              className="clothes-section__item"
+            >
+              <ItemCard item={item} onCardClick={onCardClick} />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
+
 export default ClothesSection;

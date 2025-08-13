@@ -2,7 +2,7 @@ import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState, useEffect } from "react";
 export default function AddItemModal({
-  onclose,
+  onClose,
   isOpen,
   activeModal,
   onAddItemModalSubmit,
@@ -25,6 +25,8 @@ export default function AddItemModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("🧾 Submitting:", { name, imageUrl, weather });
+
     onAddItemModalSubmit({ name, imageUrl, weather });
   };
 
@@ -42,7 +44,7 @@ export default function AddItemModal({
       buttonText="Add garment"
       title="New garment"
       activeModal={activeModal}
-      onclose={onclose}
+      onClose={onClose}
       isOpen={isOpen}
       onSubmit={handleSubmit}
     >
@@ -80,7 +82,7 @@ export default function AddItemModal({
           <input
             type="radio"
             className="modal__radio-input"
-            name="weatherType"
+            name="weather"
             value="hot"
             onChange={handleWeatherChange}
             checked={weather === "hot" ? true : false}
@@ -92,7 +94,7 @@ export default function AddItemModal({
           <input
             type="radio"
             className="modal__radio-input"
-            name="weatherType"
+            name="weather"
             value="warm"
             onChange={handleWeatherChange}
             checked={weather === "warm" ? true : false}
@@ -104,7 +106,7 @@ export default function AddItemModal({
           <input
             type="radio"
             className="modal__radio-input"
-            name="weatherType"
+            name="weather"
             value="cold"
             onChange={handleWeatherChange}
             checked={weather === "cold" ? true : false}

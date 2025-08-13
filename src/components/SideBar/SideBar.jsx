@@ -1,11 +1,21 @@
 import "./SideBar.css";
-import avatar from "../../assets/avatar.png";
-function SideBar() {
+import defaultAvatar from "../../assets/avatar.png";
+
+function SideBar({ currentUser }) {
+  const avatarSrc = currentUser?.avatar?.trim() || defaultAvatar;
+  const displayName = currentUser?.name || "User";
+
   return (
     <div className="sidebar">
-      <img src={avatar} alt="Sidebar Avatar" className="sidebar__avatar" />
-      <p className="sidebar__username">User Name</p>
+      <img
+        src={avatarSrc}
+        alt={`${displayName}'s avatar`}
+        className="sidebar__avatar"
+        aria-label="User avatar"
+      />
+      <p className="sidebar__username">{displayName}</p>
     </div>
   );
 }
+
 export default SideBar;

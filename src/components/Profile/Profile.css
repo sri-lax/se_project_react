@@ -1,3 +1,16 @@
 .profile {
   display: flex;
 }
+
+.profile__logout-button {
+  display: flex;
+  padding-top: 13px;
+  border: none;
+  width: 66px;
+  height: 25px;
+}
+.profile__edit-button {
+  border: none;
+  width: 139px;
+  height: 25px;
+}

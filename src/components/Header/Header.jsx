@@ -1,10 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import CurrentUserContext from "../../Contexts/CurrentUserContext";
 
-function Header({ handleAddClick, weatherData }) {
+function Header({
+  handleAddClick,
+  weatherData,
+  isLoggedIn,
+  onLogin,
+  onRegister,
+  onLogout,
+}) {
+  const currentUser = useContext(CurrentUserContext);
+  const location = useLocation();
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -23,19 +33,56 @@ function Header({ handleAddClick, weatherData }) {
 
       <div type="button" className="header__user-container">
         <ToggleSwitch />
-        <button onClick={handleAddClick} className="header__add-clothes-btn">
-          + Add clothes
-        </button>{" "}
-        <Link to="/profile" className="header__link">
-          <div className="header__user-name">
-            <p className="header__username">Terrence Tegegne</p>
-            <img
-              src={avatar}
-              alt="Terrence Tegegne"
-              className="header__avatar"
-            />
-          </div>
-        </Link>
+
+        {isLoggedIn ? (
+          <>
+            <button
+              onClick={handleAddClick}
+              className="header__add-clothes-btn"
+            >
+              + Add clothes
+            </button>{" "}
+            <Link to="/profile" className="header__link">
+              <div className="header__user-name">
+                <p className="header__username">
+                  {currentUser?.name || "User"}
+                </p>
+                {currentUser?.avatar ? (
+                  <img
+                    src={currentUser.avatar}
+                    alt={`${currentUser.name}'s avatar`}
+                    className="header__avatar"
+                  />
+                ) : (
+                  <div
+                    className="header__avatar-placeholder"
+                    aria-label={`Avatar placeholder for ${
+                      currentUser?.name || "User"
+                    }`}
+                    title={currentUser?.name || "User"}
+                  >
+                    {getInitials(currentUser?.name || "User")}
+                  </div>
+                )}
+              </div>
+            </Link>
+            {/* Hide Logout button when on /profile */}
+            {location.pathname !== "/profile" && (
+              <button onClick={onLogout} className="header__auth-btn">
+                Log Out
+              </button>
+            )}
+          </>
+        ) : (
+          <>
+            <button onClick={onRegister} className="header__auth-btn">
+              Sign Up
+            </button>
+            <button onClick={onLogin} className="header__auth-btn">
+              Log In
+            </button>
+          </>
+        )}
       </div>
     </header>
   );
