@@ -25,3 +25,7 @@ https://www.loom.com/share/72d3507895964d8ebde448878f80e85e?sid=b535e99c-20a6-4d
 - Vite for lightning-fast dev workflow and HMR
 - JSON Server for persistent local storage
 - Custom hooks and shared API utilities for clean logic
+
+## Related Repositories
+
+- [Backend Repository] (https://github.com/sri-lax/se_project_express.git)

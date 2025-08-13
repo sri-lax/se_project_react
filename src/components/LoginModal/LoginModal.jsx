@@ -10,14 +10,33 @@ export default function LoginModal({
   setLoginError,
 }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [emailError, setEmailError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
     setLoginError("");
+    setFormData({ ...formData, [name]: value });
+
+    // Clear error if user starts typing again
+    if (submitted && name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailRegex.test(value)) {
+        setEmailError("");
+      }
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitted(true);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setEmailError(" (this is not a email address)");
+      return;
+    }
+
     onLogin(formData);
   };
 
@@ -25,10 +44,11 @@ export default function LoginModal({
     if (isOpen) {
       setFormData({ email: "", password: "" });
       setLoginError("");
+      setEmailError("");
+      setSubmitted(false);
     }
   }, [isOpen]);
 
-  //  Only render modal if isOpen is true
   if (!isOpen) return null;
 
   return (
@@ -40,18 +60,23 @@ export default function LoginModal({
       onSubmit={handleSubmit}
     >
       <label htmlFor="email" className="modal__label">
-        Email
-        <input
-          type="email"
-          name="email"
-          id="email"
-          className="modal__input"
-          placeholder="youremail@gmail.com"
-          required
-          onChange={handleChange}
-          value={formData.email}
-          autoFocus
-        />
+        Email{" "}
+        {emailError && <span className="modal__input-hint">{emailError}</span>}
+        <div className="modal__input-wrapper">
+          <input
+            type="text"
+            name="email"
+            id="email"
+            className={`modal__input ${
+              emailError ? "modal__input--invalid" : ""
+            }`}
+            placeholder="youremail@gmail.com"
+            required
+            onChange={handleChange}
+            value={formData.email}
+            autoFocus
+          />
+        </div>
       </label>
 
       <label htmlFor="password" className="modal__label">

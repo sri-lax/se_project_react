@@ -16,3 +16,18 @@
     transform: translateY(0);
   }
 }
+
+.modal__input-wrapper {
+  position: relative;
+}
+
+.modal__input-hint {
+  transform: translateY(-50%);
+  color: red;
+  font-style: italic;
+  pointer-events: none;
+}
+
+.modal__input--invalid {
+  border-color: red;
+}
