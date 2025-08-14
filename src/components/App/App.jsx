@@ -55,8 +55,11 @@ function App() {
       })
       .then((res) => {
         localStorage.setItem("jwt", res.token);
+        return checkToken(res.token);
+      })
+      .then((user) => {
         setIsLoggedIn(true);
-        setCurrentUser({ name: formData.name, email: formData.email });
+        setCurrentUser(user);
       })
       .catch(console.error);
   };
@@ -139,7 +142,7 @@ function App() {
 
     request
       .then((res) => {
-        const updatedCard = res.data; // ✅ unwrap if needed
+        const updatedCard = res;
         console.log("Updated card:", updatedCard);
 
         setClothingItems((cards) =>
@@ -169,7 +172,7 @@ function App() {
     addItem({ name, imageUrl, weather })
       .then((newItem) => {
         console.log("Item added:", newItem);
-        setClothingItems((prevItems) => [newItem.data, ...prevItems]);
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
         closeActiveModal();
       })
       .catch((error) => {

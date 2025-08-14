@@ -17,10 +17,10 @@ function ConfirmationModal({ isOpen, onConfirm, onCancel }) {
           irreversible.
         </p>
         <div className="modal__actions">
-          <button className="modal__confirm" onClick={onConfirm}>
+          <button type="button" className="modal__confirm" onClick={onConfirm}>
             Yes, delete item
           </button>
-          <button className="modal__cancel" onClick={onCancel}>
+          <button type="button" className="modal__cancel" onClick={onCancel}>
             Cancel
           </button>
         </div>

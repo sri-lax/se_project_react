@@ -82,6 +82,7 @@ export default function AddItemModal({
           <input
             type="radio"
             className="modal__radio-input"
+            id="weather-hot"
             name="weather"
             value="hot"
             onChange={handleWeatherChange}
@@ -94,6 +95,7 @@ export default function AddItemModal({
           <input
             type="radio"
             className="modal__radio-input"
+            id="weather-warm"
             name="weather"
             value="warm"
             onChange={handleWeatherChange}
@@ -106,6 +108,7 @@ export default function AddItemModal({
           <input
             type="radio"
             className="modal__radio-input"
+            id="weather-cold"
             name="weather"
             value="cold"
             onChange={handleWeatherChange}

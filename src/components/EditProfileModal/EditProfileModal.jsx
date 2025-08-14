@@ -41,7 +41,7 @@ export default function EditProfileModal({
         <input
           type="text"
           className="modal__input"
-          id="name"
+          id="edit-name"
           placeholder="Your name"
           required
           minLength="1"
@@ -56,7 +56,7 @@ export default function EditProfileModal({
         <input
           type="url"
           className="modal__input"
-          id="avatar"
+          id="edit-avatar"
           placeholder="Avatar image URL"
           required
           value={avatar}
