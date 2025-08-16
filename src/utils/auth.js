@@ -1,15 +1,5 @@
 const BASE_URL = "http://localhost:3001";
-
-//  Helper function to handle fetch responses consistently
-
-const checkResponse = async (res) => {
-  const data = await res.json();
-  if (res.ok) return data;
-  console.error("API Error:", data); // Optional: log for debugging
-  return Promise.reject(data.message || "Request failed");
-};
-
-// Register a new user
+import { checkResponse } from "./api";
 
 export const register = ({ name, avatar, email, password }) => {
   return fetch(`${BASE_URL}/signup`, {

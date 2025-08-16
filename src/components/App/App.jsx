@@ -1,16 +1,14 @@
-import "./App.css";
+// External library imports
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { coordinates, APIkey } from "../../utils/constants";
-import Header from "../Header/Header";
-import Main from "../Main/Main";
-import ItemModal from "../ItemModal/ItemModal";
-import AddItemModal from "../AddItemModal/AddItemModal";
-import EditProfileModal from "../EditProfileModal/EditProfileModal";
-import Profile from "../Profile/Profile";
-import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
-import Footer from "../Footer/Footer";
+
+// Contexts
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
+import CurrentUserContext from "../../Contexts/CurrentUserContext";
+
+// Utility/API imports
+import { coordinates, APIkey } from "../../utils/constants";
+import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import {
   getItems,
   addItem,
@@ -18,12 +16,25 @@ import {
   addCardLike,
   removeCardLike,
 } from "../../utils/api";
-import { getWeather, filterWeatherData } from "../../utils/weatherApi";
+import { register, authorize, checkToken, updateUser } from "../../utils/auth";
+
+// Internal component imports
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import Profile from "../Profile/Profile";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import Footer from "../Footer/Footer";
+
+// Modal imports
+import ItemModal from "../ItemModal/ItemModal";
+import AddItemModal from "../AddItemModal/AddItemModal";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
-import { register, authorize, checkToken, updateUser } from "../../utils/auth";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import CurrentUserContext from "../../Contexts/CurrentUserContext";
+
+//Styles
+import "./App.css";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -121,20 +132,22 @@ function App() {
 
   // 🧩 Modal logic
   const handleCardClick = (card) => {
-    console.log("Card clicked:", card);
-
     setActiveModal("preview");
     setSelectedCard(card);
   };
 
   const handleConfirmDelete = () => {
-    deleteItem(selectedCard._id).then(() => {
-      setClothingItems((prevItems) =>
-        prevItems.filter((item) => item._id !== selectedCard._id)
-      );
-      setIsConfirmModalOpen(false);
-      closeActiveModal();
-    });
+    deleteItem(selectedCard._id)
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item._id !== selectedCard._id)
+        );
+        setIsConfirmModalOpen(false);
+        closeActiveModal();
+      })
+      .catch((err) => {
+        console.error("Failed to delete item:", err);
+      });
   };
 
   const handleCardLike = ({ id, isLiked }) => {
@@ -142,7 +155,7 @@ function App() {
 
     request
       .then((res) => {
-        const updatedCard = res;
+        const updatedCard = res.data;
         console.log("Updated card:", updatedCard);
 
         setClothingItems((cards) =>
@@ -151,7 +164,7 @@ function App() {
           )
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error("Failed to update card:", err));
   };
 
   const handleCancelDelete = () => setIsConfirmModalOpen(false);
@@ -167,21 +180,19 @@ function App() {
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    console.log("Submitting item:", { name, imageUrl, weather });
-
-    addItem({ name, imageUrl, weather })
+    return addItem({ name, imageUrl, weather }) //  Return the promise
       .then((newItem) => {
-        console.log("Item added:", newItem);
+        console.log(" Wrapped item:", newItem);
+        console.log(" Owner of new item:", newItem.owner);
         setClothingItems((prevItems) => [newItem, ...prevItems]);
         closeActiveModal();
       })
       .catch((error) => {
         console.error("Failed to add item:", error);
-        // Optional: show feedback to user
       });
   };
 
-  // ⌨️ Close modal with Esc key
+  // Close modal with Esc key
   useEffect(() => {
     if (!activeModal) return;
 
@@ -195,28 +206,32 @@ function App() {
     return () => document.removeEventListener("keydown", handleEscClose);
   }, [activeModal]);
 
-  // 🌦️ Fetch weather
+  // Fetch weather
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
         const filtered = filterWeatherData(data);
         setWeatherData(filtered);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to fetch weather data:", error);
+      });
   }, []);
 
-  // 👕 Fetch clothing items
+  // Fetch clothing items
   useEffect(() => {
     getItems()
-      .then((response) => {
-        console.table(response.data);
-        const items = Array.isArray(response?.data)
-          ? response.data.reverse()
+      .then((items) => {
+        const clothingArray = Array.isArray(items?.data)
+          ? items.data.reverse()
           : [];
-        console.log("Processed items:", items);
-        setClothingItems(items);
+        console.table(clothingArray); // ✅ Should show clean item objects
+        setClothingItems(clothingArray);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to fetch clothing items:", error);
+        setClothingItems([]); // Optional fallback
+      });
   }, []);
 
   return (
@@ -263,6 +278,7 @@ function App() {
                       currentUser={currentUser}
                       onLogout={handleLogout}
                       onEditProfileClick={handleEditProfileClick}
+                      onCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }
@@ -311,7 +327,6 @@ function App() {
             isOpen={isEditModalOpen}
             onClose={closeEditProfileModal}
             activeModal="editProfile"
-            currentUser={currentUser}
             onEditProfileSubmit={handleEditProfileSubmit}
           />
 

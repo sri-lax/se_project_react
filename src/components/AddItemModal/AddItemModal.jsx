@@ -27,7 +27,13 @@ export default function AddItemModal({
     e.preventDefault();
     console.log("🧾 Submitting:", { name, imageUrl, weather });
 
-    onAddItemModalSubmit({ name, imageUrl, weather });
+    onAddItemModalSubmit({ name, imageUrl, weather })
+      .then(() => {
+        console.log("✅ Item added successfully");
+      })
+      .catch((err) => {
+        console.error(" Failed to add item:", err);
+      });
   };
 
   // ✅ Reset fields only when modal opens

@@ -1,19 +1,23 @@
 import ClothesSection from "../ClothesSection/ClothesSection";
 import SideBar from "../SideBar/SideBar";
 import "./Profile.css";
+import { useContext } from "react";
+import CurrentUserContext from "../../Contexts/CurrentUserContext";
 
 function Profile({
   onCardClick,
   clothingItems,
   onAddClick,
-  currentUser,
   onLogout,
   onEditProfileClick,
+  onCardLike,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+
   return (
     <div className="profile">
       <section className="profile__sidebar">
-        <SideBar currentUser={currentUser} />
+        <SideBar />
 
         {currentUser && (
           <div className="profile__user-info">
@@ -34,6 +38,7 @@ function Profile({
           onCardClick={onCardClick}
           clothingItems={clothingItems}
           onAddClick={onAddClick}
+          onCardLike={onCardLike}
         />
       </section>
     </div>

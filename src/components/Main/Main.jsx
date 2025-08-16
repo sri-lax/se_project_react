@@ -29,7 +29,7 @@ function Main({ weatherData, onCardClick, clothingItems, onCardLike }) {
                   key={item._id || `fallback-key-${index}`}
                   item={item}
                   onCardClick={onCardClick}
-                  onCardLike={onCardLike}
+                  // onCardLike={onCardLike}
                 />
               );
             })}

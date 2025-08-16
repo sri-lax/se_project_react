@@ -1,8 +1,11 @@
 const baseUrl = "http://localhost:3001";
 
-//  Reusable response handler
 function checkResponse(res) {
-  return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  return res.json().then((data) => {
+    if (res.ok) return data;
+    console.error("API Error:", data);
+    return Promise.reject(data.message || `Error: ${res.status}`);
+  });
 }
 
 // Helper to get auth headers
@@ -17,7 +20,9 @@ function getAuthHeaders() {
 // Get all items
 function getItems() {
   return fetch(`${baseUrl}/items`, {
-    headers: getAuthHeaders(),
+    headers: {
+      "Content-Type": "application/json",
+    },
   }).then(checkResponse);
 }
 
@@ -26,8 +31,14 @@ function addItem({ name, imageUrl, weather }) {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: getAuthHeaders(),
+
     body: JSON.stringify({ name, imageUrl, weather }),
-  }).then(checkResponse);
+  })
+    .then(checkResponse)
+    .then((response) => {
+      console.log("✅ Raw item from backend:", response);
+      return response.data; // ✅ Extract the actual item
+    });
 }
 
 // Delete an item by ID (requires auth)

@@ -1,7 +1,11 @@
 import "./SideBar.css";
 import defaultAvatar from "../../assets/avatar.png";
+import { useContext } from "react";
+import CurrentUserContext from "../../Contexts/CurrentUserContext";
 
-function SideBar({ currentUser }) {
+function SideBar() {
+  const currentUser = useContext(CurrentUserContext);
+
   const avatarSrc = currentUser?.avatar?.trim() || defaultAvatar;
   const displayName = currentUser?.name || "User";
 
