@@ -12,6 +12,7 @@ function ItemModal({
   isConfirmModalOpen,
 }) {
   const currentUser = useContext(CurrentUserContext);
+  console.log("Image URL for", card?.name, ":", card?.imageUrl);
 
   useEffect(() => {
     console.log("ItemModal mounted");

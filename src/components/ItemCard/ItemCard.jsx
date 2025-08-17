@@ -20,7 +20,11 @@ function ItemCard({ item, onCardClick, onCardLike }) {
   const isLiked = item.likes.some((id) => id === currentUser?._id);
 
   const handleLike = () => {
-    onCardLike({ id: item._id, isLiked });
+    if (typeof onCardLike === "function") {
+      onCardLike({ id: item._id, isLiked });
+    } else {
+      console.warn("onCardLike is not a function");
+    }
   };
 
   const heartIconClassName = isLiked
