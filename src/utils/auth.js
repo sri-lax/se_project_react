@@ -1,4 +1,8 @@
-const BASE_URL = "http://localhost:3001";
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://api.jumpingcrab.com"
+    : "http://localhost:3001";
+
 import { checkResponse } from "./api";
 
 export const register = ({ name, avatar, email, password }) => {
