@@ -27,9 +27,9 @@ function ItemCard({ item, onCardClick, onCardLike }) {
     }
   };
 
-  const heartIconClassName = isLiked
-    ? "card__like-button-icon_active"
-    : "card__like-button-icon";
+  // const heartIconClassName = isLiked
+  //   ? "card__like-button-icon_active"
+  //   : "card__like-button-icon";
 
   return (
     <div className="card">

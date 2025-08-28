@@ -47,7 +47,7 @@ export default function LoginModal({
       setEmailError("");
       setSubmitted(false);
     }
-  }, [isOpen]);
+  }, [isOpen, setLoginError]);
 
   if (!isOpen) return null;
 

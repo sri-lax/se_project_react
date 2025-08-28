@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
+import { getInitials } from "../../utils/helpers";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import CurrentUserContext from "../../Contexts/CurrentUserContext";
 
